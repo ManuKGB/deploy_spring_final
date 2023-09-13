@@ -1,15 +1,11 @@
-
 name: Java Gradle Build Template
- 
+
 on:
   workflow_call:
   workflow_dispatch:
 
-
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,10 +24,8 @@ jobs:
         cache: 'gradle'
 
     - name: Grant execution permission for gradlew
-    - run: chmod +x gradlew
+      run: chmod +x gradlew
 
-
-    
     - name: Build with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
@@ -43,16 +37,3 @@ jobs:
         name: build-reports-${{matrix.jdk_version}}
         path: build/reports/
         retention-days: 1
-
-
-
-
-
-
-
-
-
-
-
-
-        
