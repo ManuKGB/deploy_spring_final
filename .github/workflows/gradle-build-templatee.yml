@@ -16,16 +16,14 @@ jobs:
     strategy:
       matrix:
         jdk_version:
-          - "8"
-          - "11"
           - "17"
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK ${{matrix.jdk_version}}
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: ${{matrix.jdk_version}}
+        java-version: 17
         distribution: 'temurin'
         cache: 'gradle'
 
@@ -43,7 +41,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: build-reports-${{matrix.jdk_version}}
+        name: build-reports-17
         path: build/reports/
         retention-days: 1
 
