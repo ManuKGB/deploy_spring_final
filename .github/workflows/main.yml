@@ -23,3 +23,24 @@ jobs:
           docker -v
           node -v
           java -version
+
+      - name: List files in the repository pre chcekout
+        run : ls ${{github.workspace}}
+
+      - uses: actions/checkout@v3
+
+      - name: List files in the repository after chcekout
+        run : ls ${{github.workspace}}
+
+
+
+
+
+
+
+
+
+
+
+
+        
