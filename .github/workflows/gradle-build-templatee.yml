@@ -1,0 +1,49 @@
+
+name: Java CI with Gradle deploy
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk_version:
+          - "8"
+          - "11"
+          - "17"
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK ${{matrix.jdk_version}}
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{matrix.jdk_version}}
+        distribution: 'temurin'
+        cache: 'gradle'
+
+        
+    - name: Grant execution permission for gradlew
+      run: chmod +x gradlew
+
+      
+        
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      with:
+        arguments: build
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-reports-${{matrix.jdk_version}}
+        path: build/reports/
+        retention-days: 1
+
